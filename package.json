@@ -1,0 +1,29 @@
+{
+  "name": "lim011-fe-md-links",
+  "version": "1.0.0",
+  "description": "library for md-links",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaricruzJ/LIM011-fe-md-links.git"
+  },
+  "keywords": [
+    "md-link",
+    "library",
+    "markdown"
+  ],
+  "author": "Maricruz J. Enrique Rivera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaricruzJ/LIM011-fe-md-links/issues"
+  },
+  "homepage": "https://github.com/MaricruzJ/LIM011-fe-md-links#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "jest": "^24.9.0"
+  },
+  "dependencies": {}
+}
