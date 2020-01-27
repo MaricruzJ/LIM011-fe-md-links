@@ -2,11 +2,6 @@ const util = require('util');
 const path = require('path');
 const fs = require('fs');
 
-
-/* const mdLink = (path) => {
-  return path;
-} */
-
 const isAbsolute = (ruta) => {
   return path.isAbsolute(ruta) ? true : false;
 }
@@ -19,18 +14,11 @@ const isPathExists = (ruta) => {
   return fs.existsSync(ruta);
 }
 
-const isDirectory = (ruta) => {
-  return new Promise((resolve, reject) => {
-    fs.stat(ruta, (err, stats) => {
-      resolve(stats.isDirectory());
-    })
-  })
-}
 //1404
 
-const isFile = (ruta) => {
+const typePath = (ruta) => {
   const stat = util.promisify(fs.stat);
-  return stat(ruta)
+  return stat(ruta);
 }
 
 const readDirectory = (ruta) => {
@@ -43,36 +31,85 @@ const readFile = (ruta) => {
   return containFile(ruta, 'utf8');
 }
 
-const fileMarkdown = (ruta) => {
+const fileFormat = (ruta) => {
   return path.extname(ruta);
 }
 
+const getLinks = (data, urlFile) => {
+  let arr = [];
+  const lines = data.split('\n');
+  const expReg = /(\b(http?|https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  lines.forEach(line => {
+    let obj = {};
+    let urls = line.match(expReg);
+    if (urls) {
+      obj.href = urls[0];
+      obj.text = line.substring(line.indexOf('[') + 1, line.indexOf(']'));
+      obj.file = urlFile;
+      arr.push(obj);
+    }
+  });
+  return arr;
+}
 
+const validateLink = (array) => {
+  console.log('hi');
+}
 
+const mdLink = (path, options) => {
+  console.log('=> Ruta ingresada');
+  if (isAbsolute(path)) {
+    console.log('=> Es absoluta ' + path);
+    if (isPathExists(path)) {
+      console.log('=> Existe ruta');
+      typePath(path)
+        .then(data => {
+          if (data.isFile()) {
+            if (fileFormat(path) === '.md') {
+              readFile(path)
+                .then(data => {
+                  const array = getLinks(data, path);
+                  if (options === true) {
+                    /* console.log(array);*/
+                    validateLink(array);
+                  } else {
+                    console.log('validate false');
+                    return array;
+                  }
+                })
+                .catch(error => console.log(error))
+            } else {
+              console.log('No es archivo markdown');
+            }
+          } else {
+            readDirectory(path)
+              .then(data => data.forEach(element => mdLink(path + '/' + element, options)))
+              .catch(error => console.log(error))
+          }
+        })
+        .catch(error => console.log(error))
+    } else {
+      console.log('=> La ruta no existe');
+    }
+  } else {
+    const newPath = convertToAbsolute(path);
+    console.log('=> Es relativo, pasando a absoluto');
+    mdLink(newPath, options);
+  }
+}
 
-
-
-/* isDirectory('')
-.then(data => console.log(data))
-.catch(error => console.log(error)); */
-
-/* isFile('/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/src/main.js')
-  .then(stats => console.log(stats.isFile()))
-  .catch(error => console.log(error)); */
-
-/* readFile('/home/maricruzj/Desktop/Projects/LIM011-fe-social-network/Readme.md')
-.then(data => console.log(data))
-.catch(err => console.log(err)) */
+mdLink('../../../Projects/LIM011-fe-md-links/README.md', true);
 
 const mainFunctions = {
   pathAbsolute: isAbsolute,
   convertToPathAbsolute: convertToAbsolute,
   PathExists: isPathExists,
-  pathIsDirectory: isDirectory,
-  pathIsFile: isFile,
+  typePath: typePath,
   readContainDir: readDirectory,
   readContainFile: readFile,
-  fileMd: fileMarkdown,
+  fileMd: fileFormat,
+  validateLink: validateLink,
+  getArrLinks: getLinks,
 }
 
 module.exports = mainFunctions;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1579821624174" clover="3.2.0">
-  <project timestamp="1579821624175" name="All files">
+<coverage generated="1579995284491" clover="3.2.0">
+  <project timestamp="1579995284492" name="All files">
     <metrics statements="26" coveredstatements="26" conditionals="2" coveredconditionals="2" methods="10" coveredmethods="10" elements="38" coveredelements="38" complexity="0" loc="26" ncloc="26" packages="1" files="1" classes="1"/>
-    <file name="main.js" path="/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/src/main.js">
+    <file name="main.js" path="/home/maricruzj/Escritorio/Projects/LIM011-fe-md-links/src/main.js">
       <metrics statements="26" coveredstatements="26" conditionals="2" coveredconditionals="2" methods="10" coveredmethods="10"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
@@ -26,10 +26,10 @@
       <line num="41" count="1" type="stmt"/>
       <line num="42" count="2" type="stmt"/>
       <line num="43" count="2" type="stmt"/>
-      <line num="48" count="1" type="stmt"/>
-      <line num="49" count="1" type="stmt"/>
-      <line num="67" count="1" type="stmt"/>
-      <line num="78" count="1" type="stmt"/>
+      <line num="46" count="1" type="stmt"/>
+      <line num="47" count="1" type="stmt"/>
+      <line num="82" count="1" type="stmt"/>
+      <line num="94" count="1" type="stmt"/>
     </file>
   </project>
 </coverage>
