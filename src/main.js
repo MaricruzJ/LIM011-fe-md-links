@@ -1,6 +1,7 @@
 const util = require('util');
 const path = require('path');
 const fs = require('fs');
+const fetch = require("node-fetch");
 
 const isAbsolute = (ruta) => {
   return path.isAbsolute(ruta) ? true : false;
@@ -52,58 +53,14 @@ const getLinks = (data, urlFile) => {
   return arr;
 }
 
-const validateLink = (array) => {
-  console.log('hi');
+const validateLink = (link) => {
+  return fetch(link);
 }
-
-const mdLink = (path, options) => {
-  console.log('=> Ruta ingresada');
-  if (isAbsolute(path)) {
-    console.log('=> Es absoluta ' + path);
-    if (isPathExists(path)) {
-      console.log('=> Existe ruta');
-      typePath(path)
-        .then(data => {
-          if (data.isFile()) {
-            if (fileFormat(path) === '.md') {
-              readFile(path)
-                .then(data => {
-                  const array = getLinks(data, path);
-                  if (options === true) {
-                    /* console.log(array);*/
-                    validateLink(array);
-                  } else {
-                    console.log('validate false');
-                    return array;
-                  }
-                })
-                .catch(error => console.log(error))
-            } else {
-              console.log('No es archivo markdown');
-            }
-          } else {
-            readDirectory(path)
-              .then(data => data.forEach(element => mdLink(path + '/' + element, options)))
-              .catch(error => console.log(error))
-          }
-        })
-        .catch(error => console.log(error))
-    } else {
-      console.log('=> La ruta no existe');
-    }
-  } else {
-    const newPath = convertToAbsolute(path);
-    console.log('=> Es relativo, pasando a absoluto');
-    mdLink(newPath, options);
-  }
-}
-
-mdLink('../../../Projects/LIM011-fe-md-links/README.md', true);
 
 const mainFunctions = {
   pathAbsolute: isAbsolute,
   convertToPathAbsolute: convertToAbsolute,
-  PathExists: isPathExists,
+  pathExists: isPathExists,
   typePath: typePath,
   readContainDir: readDirectory,
   readContainFile: readFile,
