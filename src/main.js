@@ -36,21 +36,43 @@ const fileFormat = (ruta) => {
   return path.extname(ruta);
 }
 
-const getLinks = (data, urlFile) => {
-  let arr = [];
-  const lines = data.split('\n');
-  const expReg = /(\b(http?|https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-  lines.forEach(line => {
-    let obj = {};
-    let urls = line.match(expReg);
-    if (urls) {
-      obj.href = urls[0];
-      obj.text = line.substring(line.indexOf('[') + 1, line.indexOf(']'));
-      obj.file = urlFile;
-      arr.push(obj);
-    }
-  });
-  return arr;
+const joinPath = (ruta, file) => {
+  return path.join(ruta, file);
+}
+
+const getFilesMd = (path) => {
+  const arrFilesMd = [];
+  return typePath(path)
+    .then(stats => {
+      if (stats.isFile() && fileFormat(path) === '.md') {
+        arrFilesMd.push(path);
+      } else if (stats.isDirectory()) {
+        return readDirectory(path)
+          .then(data => {
+            data.forEach((element) => {
+              const newPath = joinPath(path, element);
+              getFilesMd(newPath);
+            })
+          })
+      }
+      return arrFilesMd;
+    })
+}
+
+getFilesMd('/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/README.md')
+  .then(data => console.log(data))
+
+
+
+
+const getLinks = (data) => {
+  const html = md.render(data);
+  const fragment = JSDOM.fragment(html);
+  const abc = fragment.querySelectorAll('a');
+  abc.forEach((element) => {
+    console.log(element);
+    console.log('array de objetos');
+  })
 }
 
 const validateLink = (link) => {
@@ -58,15 +80,16 @@ const validateLink = (link) => {
 }
 
 const mainFunctions = {
-  pathAbsolute: isAbsolute,
-  convertToPathAbsolute: convertToAbsolute,
-  pathExists: isPathExists,
+  isAbsolute: isAbsolute,
+  convertToAbsolute: convertToAbsolute,
+  isPathExists: isPathExists,
   typePath: typePath,
-  readContainDir: readDirectory,
-  readContainFile: readFile,
-  fileMd: fileFormat,
+  readDirectory: readDirectory,
+  readFile: readFile,
+  fileFormat: fileFormat,
   validateLink: validateLink,
-  getArrLinks: getLinks,
+  getLinks: getLinks,
+  joinPath: joinPath,
 }
 
 module.exports = mainFunctions;

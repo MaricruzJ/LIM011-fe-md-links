@@ -1,38 +1,24 @@
 const functions = require('./main');
 
 const mdLink = (path, options) => {
-  console.log('=> Ruta ingresada');
-  if (functions.pathAbsolute(path)) {
-    console.log('=> Es absoluta ' + path);
-    if (functions.pathExists(path)) {
-      console.log('=> Existe ruta');
+  if (functions.isAbsolute(path)) {
+    if (functions.isPathExists(path)) {
       functions.typePath(path)
         .then(data => {
           if (data.isFile()) {
-            if (functions.fileMd(path) === '.md') {
-              functions.readContainFile(path)
+            if (functions.fileFormat(path) === '.md') {
+              functions.readFile(path)
                 .then(data => {
-                  const arrayOfObjects = functions.getArrLinks(data, path);
+                  const arrayOfObjects = functions.getLinks(data, path);
                   if (options === true) {
-                    for (const key in object) {
-                      if (object.hasOwnProperty(key)) {
-                        const element = object[key];
-                        
-                      }
-                    }
-
-                  /*   arrayOfObjects.forEach(object => {
+                    /* return arrayOfObjects.map((object) => {
                       functions.validateLink(object.href)
                         .then((response) => {
                           arrayOfObjects.status = response.status;
-                          arrayOfObjects.statusText = response.statusText;
-                          //console.log(arrayOfObjects);
+                          arrayOfObjects.statusText = response.statusText;                        
                         })
                         .catch((error) => console.log(error.message))
-                    }); 
-                    //console.log(arrayOfObjects);
-                    */
-                    return arrayOfObjects;
+                    }) */
                   } else {
                     console.log('validate false');
                     return arrayOfObjects;
@@ -43,8 +29,11 @@ const mdLink = (path, options) => {
               console.log('No es archivo markdown');
             }
           } else {
-            functions.readContainDirectory(path)
-              .then(data => data.forEach(element => mdLink(path + '/' + element, options)))
+            functions.readDirectory(path)
+              .then(data => data.forEach(element => {
+                const newPath = functions.joinPath(path,element);
+                mdLink(newPath, options)
+              }))
               .catch(error => console.log(error))
           }
         })
@@ -53,7 +42,7 @@ const mdLink = (path, options) => {
       console.log('=> La ruta no existe');
     }
   } else {
-    const newPath = functions.convertToPathAbsolute(path);
+    const newPath = functions.convertToAbsolute(path);
     console.log('=> Es relativo, pasando a absoluto');
     mdLink(newPath, options);
   }
