@@ -14,25 +14,15 @@ const mdLink = (path, options) => {
                 .then(data => {
                   const arrayOfObjects = functions.getArrLinks(data, path);
                   if (options === true) {
-                    for (const key in object) {
-                      if (object.hasOwnProperty(key)) {
-                        const element = object[key];
-                        
-                      }
-                    }
-
-                  /*   arrayOfObjects.forEach(object => {
+                    const newArrayofObjects = arrayOfObjects.map((object) => {
                       functions.validateLink(object.href)
                         .then((response) => {
                           arrayOfObjects.status = response.status;
                           arrayOfObjects.statusText = response.statusText;
-                          //console.log(arrayOfObjects);
                         })
                         .catch((error) => console.log(error.message))
-                    }); 
-                    //console.log(arrayOfObjects);
-                    */
-                    return arrayOfObjects;
+                    })
+                    console.log(newArrayOfObjects);
                   } else {
                     console.log('validate false');
                     return arrayOfObjects;
