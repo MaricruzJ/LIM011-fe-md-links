@@ -28,3 +28,5 @@ const stats = (data, option) => {
     });
   }
 };
+
+module.exports = stats;
