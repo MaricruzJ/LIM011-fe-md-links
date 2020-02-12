@@ -109,15 +109,25 @@ describe('B). file index.js', () => {
 });
 
 describe('C). file options.js', () => {
-  it('14.- Validate: true & stats: true', () => {
+  /* it('14.- Validate: true & stats: true', () => {
     const log = jest.spyOn(global.console, 'log');
     options(['test', '-v'], { validate: true, stats: true });
     expect(log).toHaveBeenCalledWith('Total: 2 \nUnique: 1 \nBroken: 0');
+  }); */
+
+  it('14.- Validate: true & stats: true', () => {
+    expect(options.statsAndValidate(newArrDetailLinks)).toEqual('Total: 2 \nUnique: 2 \nBroken: 1');
   });
 
-  it('15.- Validate: false & stats: true', () => {
-    const log = jest.spyOn(global.console, 'log');
-    options(['test', '-s'], { validate: false, stats: true });
-    expect(log).toHaveBeenCalledWith('Total: 2 \nUnique: 1');
+  it('15.- only validate', () => {
+    expect(options.onlyValidate(newArrDetailLinks)).toMatch('200 OK');
+  });
+
+  it('16.- only stats', () => {
+    expect(options.onlyStats(newArrDetailLinks)).toEqual('Total: 2 \nUnique: 2');
+  });
+
+  it('17.- only path', () => {
+    expect(options.onlyPath(arrDetailLinks)).toMatch('test/folder-test/dir-test/README-1.md https://nodejs.org/e/ Node.js');
   });
 });

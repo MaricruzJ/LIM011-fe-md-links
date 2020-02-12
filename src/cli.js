@@ -17,7 +17,15 @@ myArgs.forEach((argv) => {
 if (myArgs.length >= 1) {
   mdLinks(myArgs[0], option)
     .then((arrayOfObjects) => {
-      showData(arrayOfObjects, option);
+      if (option.stats === true && option.validate === false) {
+        console.log(showData.onlyStats(arrayOfObjects));
+      } else if (option.stats === true && option.validate === true) {
+        console.log(showData.statsAndValidate(arrayOfObjects));
+      } else if (option.stats === false && option.validate === true) {
+        console.log(showData.onlyValidate(arrayOfObjects));
+      } else {
+        console.log(showData.onlyPath(arrayOfObjects));
+      }
     })
     .catch((error) => console.log(error.message));
 } else {

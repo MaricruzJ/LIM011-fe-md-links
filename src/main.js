@@ -78,7 +78,11 @@ const validateLinks = (arrayOfObjects) => {
       }
       return object;
     })
-    .catch((error) => console.log(error.message)));
+    .catch((error) => ({
+      ...object,
+      status: 400,
+      statusText: error.message,
+    }))); // también debería de devolver un objeto.
   return Promise.all(newArray);
 };
 

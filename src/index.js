@@ -25,7 +25,7 @@ const mdLinks = (path, options) => {
             return arrayDetailLinks;
           });
       });
-  } else { console.log('=> La ruta no existe'); }
+  } else { console.log('=> La ruta no existe'); } // crear una promesa que resuelva un string
   return arrayOfObjects;
 };
 
