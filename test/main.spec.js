@@ -9,7 +9,7 @@ fetchMock
   .mock('https://es.wikipedia.org/wiki/Markdown', 200)
   .mock('https://nodejs.org/e/', 404)
   .mock('https://jestjs.io/', 200)
-  .mock('https://github.com/workshopper/learnyounode', 200);
+  .mock('hps://github.com/workshopper/learnyounode', 400);
 
 const arrDetailLinks = [
   {
@@ -42,6 +42,26 @@ const newArrDetailLinks = [
     statusText: 'fail',
   },
 ];
+
+const arrLinks = [
+  {
+    href: 'hps://github.com/workshopper/learnyounode',
+    text: 'learnyounode',
+    file: '/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/test/folder-test/dir-test/dir-in-test/README-3.md',
+  },
+];
+
+const newArrLinks = [
+  {
+    href: 'hps://github.com/workshopper/learnyounode',
+    text: 'learnyounode',
+    file: '/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/test/folder-test/dir-test/dir-in-test/README-3.md',
+    status: 400,
+    statusText: 'fail',
+  },
+];
+
+
 
 describe('A). file main.js', () => {
   it('1.- Debería de retornar true si la ruta ingresada es absoluta', () => {
@@ -92,6 +112,12 @@ describe('A). file main.js', () => {
     .then((values) => {
       expect(values).toEqual(newArrDetailLinks);
     }));
+
+  it('11.1.- Debería de devolver el array con dos nuevos campos: status y statusText', () => mainFunctions.validateLinks(arrLinks)
+    .then((values) => {
+      expect(values).toEqual(newArrLinks);
+    }));
+
 });
 
 describe('B). file index.js', () => {

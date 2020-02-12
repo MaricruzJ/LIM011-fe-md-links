@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1581467134989" clover="3.2.0">
-  <project timestamp="1581467134989" name="All files">
+<coverage generated="1581468023936" clover="3.2.0">
+  <project timestamp="1581468023936" name="All files">
     <metrics statements="104" coveredstatements="102" conditionals="18" coveredconditionals="16" methods="36" coveredmethods="35" elements="158" coveredelements="153" complexity="0" loc="104" ncloc="104" packages="1" files="3" classes="3"/>
     <file name="index.js" path="/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/src/index.js">
       <metrics statements="21" coveredstatements="20" conditionals="6" coveredconditionals="4" methods="7" coveredmethods="7"/>
@@ -71,14 +71,14 @@
       <line num="65" count="11" type="stmt"/>
       <line num="67" count="11" type="stmt"/>
       <line num="70" count="1" type="stmt"/>
-      <line num="71" count="7" type="stmt"/>
-      <line num="73" count="7" type="stmt"/>
-      <line num="74" count="7" type="cond" truecount="4" falsecount="0"/>
-      <line num="75" count="5" type="stmt"/>
-      <line num="77" count="2" type="stmt"/>
-      <line num="79" count="7" type="stmt"/>
+      <line num="71" count="8" type="stmt"/>
+      <line num="73" count="8" type="stmt"/>
+      <line num="74" count="8" type="cond" truecount="4" falsecount="0"/>
+      <line num="75" count="4" type="stmt"/>
+      <line num="77" count="4" type="stmt"/>
+      <line num="79" count="8" type="stmt"/>
       <line num="81" count="0" type="stmt"/>
-      <line num="86" count="2" type="stmt"/>
+      <line num="86" count="3" type="stmt"/>
       <line num="89" count="1" type="stmt"/>
       <line num="103" count="1" type="stmt"/>
     </file>
