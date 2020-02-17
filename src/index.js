@@ -1,14 +1,11 @@
 const functions = require('./main');
 
 let arrayOfObjects = [];
-let newPath = '';
 
 const mdLinks = (path, options) => {
-  if (functions.isAbsolute(path) !== true) {
-    newPath = functions.convertToAbsolute(path);
-  }
-  if (functions.isPathExists(newPath)) {
-    arrayOfObjects = functions.getFilesMd(newPath)
+  if (!functions.isAbsolute(path)) path = functions.convertToAbsolute(path);
+  if (functions.isPathExists(path)) {
+    arrayOfObjects = functions.getFilesMd(path)
       .then((arrPathFile) => {
         const array = arrPathFile.map((pathFile) => functions.readFile(pathFile)
           .then((data) => functions.getLinksDetail(data, pathFile)));
@@ -25,7 +22,9 @@ const mdLinks = (path, options) => {
             return arrayDetailLinks;
           });
       });
-  } else { console.log('=> La ruta no existe'); } // crear una promesa que resuelva un string
+  } else {
+    return Promise.reject(new Error('La ruta ingresada no existe'));
+  } // crear una promesa que resuelva un string
   return arrayOfObjects;
 };
 

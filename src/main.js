@@ -71,18 +71,18 @@ const validateLinks = (arrayOfObjects) => {
   const newArray = arrayOfObjects.map((object) => fetch(object.href)
     .then((response) => {
       object.status = response.status;
-      if (response.status >= 200 && response.status < 300) {
+      if (response.ok) {
         object.statusText = response.statusText;
       } else {
         object.statusText = 'fail';
       }
       return object;
     })
-    .catch((error) => ({
+    .catch(() => ({
       ...object,
       status: 400,
-      statusText: error.message,
-    }))); // también debería de devolver un objeto.
+      statusText: 'fail',
+    }))); // también debería devolver un objeto.
   return Promise.all(newArray);
 };
 

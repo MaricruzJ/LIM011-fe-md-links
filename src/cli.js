@@ -8,7 +8,6 @@ const option = {
 };
 const myArgs = process.argv.slice(2);
 
-
 myArgs.forEach((argv) => {
   if (argv === '--validate' || argv === '-v') option.validate = true;
   if (argv === '--stats' || argv === '-s') option.stats = true;

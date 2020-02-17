@@ -61,8 +61,6 @@ const newArrLinks = [
   },
 ];
 
-
-
 describe('A). file main.js', () => {
   it('1.- Debería de retornar true si la ruta ingresada es absoluta', () => {
     expect(mainFunctions.isAbsolute('/home/maricruzj')).toBe(true);
@@ -76,19 +74,22 @@ describe('A). file main.js', () => {
     expect(mainFunctions.isPathExists('README.md')).toBe(true);
   });
 
-  it('4.- Debería de retornar el estado de la ...', () => mainFunctions.typePath('README.md')
+  it('4.- Debería de retornar el estado de la ...', (done) => mainFunctions.typePath('README.md')
     .then((data) => {
       expect(data.isFile()).toBe(true);
+      done();
     }));
 
-  it('5.- Debería de retornar un array que contenga los nombres de los archivos o carpetas', () => mainFunctions.readDirectory('/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/src')
+  it('5.- Debería de retornar un array que contenga los nombres de los archivos o carpetas', (done) => mainFunctions.readDirectory('/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/src')
     .then((files) => {
       expect(files[0]).toMatch('cli.js');
+      done();
     }));
 
-  it('6.- Debería retornar una promesa que resuelva el contenido del archivo enviado', () => mainFunctions.readFile('README.md')
+  it('6.- Debería retornar una promesa que resuelva el contenido del archivo enviado', (done) => mainFunctions.readFile('README.md')
     .then((files) => {
       expect(files).toBeTruthy();
+      done();
     }));
 
   it('7.- Debería retornar el formato o extensión del archivo enviado ', () => {
@@ -99,48 +100,51 @@ describe('A). file main.js', () => {
     expect(mainFunctions.joinPath('LIM011-fe-md-links', 'README.md')).toBe('LIM011-fe-md-links/README.md');
   });
 
-  it('9.- Debería retornar un array que contiene las rutas de los archivos de formato .md', () => mainFunctions.getFilesMd('/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/test/folder-test')
+  it('9.- Debería retornar un array que contiene las rutas de los archivos de formato .md', (done) => mainFunctions.getFilesMd('/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/test/folder-test')
     .then((arr) => {
       expect(arr[0]).toEqual('/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/test/folder-test/README-0.md');
+      done();
     }));
 
   it('10.- Debería de retornar un array de objetos, cada objeto con sus tres valores', () => {
     expect(mainFunctions.getLinksDetail('Pre [Wiki](https://es.wikipedia.org)...', '.')).toEqual([{ file: '.', href: 'https://es.wikipedia.org/', text: 'Wiki' }]);
   });
 
-  it('11.- Debería de devolver el array con dos nuevos campos: status y statusText', () => mainFunctions.validateLinks(arrDetailLinks)
+  it('11.- Debería de devolver el array con dos nuevos campos: status y statusText', (done) => mainFunctions.validateLinks(arrDetailLinks)
     .then((values) => {
       expect(values).toEqual(newArrDetailLinks);
+      done();
     }));
 
-  it('11.1.- Debería de devolver el array con dos nuevos campos: status y statusText', () => mainFunctions.validateLinks(arrLinks)
+  it('11.1.- Debería de devolver el array con dos nuevos campos: status y statusText', (done) => mainFunctions.validateLinks(arrLinks)
     .then((values) => {
       expect(values).toEqual(newArrLinks);
+      done();
     }));
-
 });
 
 describe('B). file index.js', () => {
-  it('12.- Debería de devolver el array de objetos, cada objeto con tres campos', () => mdLinks('test', { validate: false, stats: false })
+  it('12.- Debería de devolver el array de objetos, cada objeto con tres campos', (done) => mdLinks('test', { validate: false, stats: false })
     .then((values) => {
       expect(values[0]).toEqual({ file: '/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/test/folder-test/README-0.md', href: 'https://es.wikipedia.org/wiki/Markdown', text: 'Markdown' });
+      done();
     }));
 
-  it('13.- Debería de devolver el array de objetos, cada objeto con 5 campos', () => mdLinks('test', { validate: true, stats: false })
+  it('13.- Debería de devolver el array de objetos, cada objeto con 5 campos', (done) => mdLinks('test', { validate: true, stats: false })
     .then((values) => {
       expect(values[0]).toEqual({
         file: '/home/maricruzj/Desktop/Projects/LIM011-fe-md-links/test/folder-test/README-0.md', href: 'https://es.wikipedia.org/wiki/Markdown', text: 'Markdown', status: 200, statusText: 'OK',
       });
+      done();
+    }));
+  it('13.1 - Debería de devolver un texto en caso la ruta ingresada no existe', (done) => mdLinks('-')
+    .catch(() => {
+      expect(Promise.reject(new Error('La ruta ingresada no existe'))).rejects.toThrow('La ruta ingresada no existe');
+      done();
     }));
 });
 
 describe('C). file options.js', () => {
-  /* it('14.- Validate: true & stats: true', () => {
-    const log = jest.spyOn(global.console, 'log');
-    options(['test', '-v'], { validate: true, stats: true });
-    expect(log).toHaveBeenCalledWith('Total: 2 \nUnique: 1 \nBroken: 0');
-  }); */
-
   it('14.- Validate: true & stats: true', () => {
     expect(options.statsAndValidate(newArrDetailLinks)).toEqual('Total: 2 \nUnique: 2 \nBroken: 1');
   });

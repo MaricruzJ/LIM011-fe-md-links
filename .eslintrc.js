@@ -19,7 +19,6 @@ module.exports = {
   rules: {
     "no-param-reassign": "off",
     "no-console": "off",
-    "no-undef": "off",
     "object-shorthand": "off",
   },
 };
