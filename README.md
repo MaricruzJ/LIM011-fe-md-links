@@ -5,19 +5,6 @@ Node.js.
 
 - Instalar la libreria via `npm install --global https://github.com/MaricruzJ/LIM011-fe-md-links` 
 
-```js 
-md-Links ./some/example.md 
-```
-```js 
-md-Links ./some/dir --validate
-```
-```js 
-md-Links ./some/example.md --stats
-```
-```js 
-md-Links ./some/example.md --stats --validate
-```
-
 ### CLI (Command Line Interface - Interfaz de Línea de Comando)
 
 El ejecutable de la librería se realiza a través de la terminal
@@ -25,6 +12,9 @@ El ejecutable de la librería se realiza a través de la terminal
 `md-links <path-to-file> [options]`
 
 Por ejemplo:
+```js 
+md-Links ./some/example.md 
+```
 
 ```sh
 $ md-links ./some/example.md
@@ -41,6 +31,9 @@ averiguar si el link funciona o no. Si el link resulta en una redirección a una
 
 Por ejemplo:
 
+```js 
+md-Links ./some/dir --validate
+```
 ```sh
 $ md-links ./some/example.md --validate
 ./some/example.md http://algo.com/2/3/ ok 200 Link a algo
@@ -52,6 +45,9 @@ $ md-links ./some/example.md --validate
 
 Si pasamos la opción `--stats` el output (salida) será un texto con estadísticas básicas sobre los links.
 
+```js 
+md-Links ./some/example.md --stats
+```
 ```sh
 $ md-links ./some/example.md --stats
 Total: 3
@@ -61,6 +57,9 @@ Unique: 3
 También podemos combinar `--stats` y `--validate` para obtener estadísticas que
 necesiten de los resultados de la validación.
 
+```js 
+md-Links ./some/example.md --stats --validate
+```
 ```sh
 $ md-links ./some/example.md --stats --validate
 Total: 3
